@@ -1,6 +1,6 @@
 # Tom Schoonjans' personal Homebrew tap
 
-This personal Homebrew repository provides Formulas for several software packages I am working on that are too obscure for the official Homebrew taps
+This personal Homebrew repository provides Formulas for several software packages I am working on that are too obscure for the official Homebrew taps for now.
 
 For general information on Homebrew, consult the [official website](http://brew.sh)
 
