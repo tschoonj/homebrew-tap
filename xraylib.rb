@@ -7,13 +7,13 @@ class Xraylib < Formula
   option "with-perl", "Build with perl support"
   option "with-ruby", "Build with ruby support"
 
-  depends_on :fortran => :recommended
   depends_on :python => :recommended
   depends_on :python3 => :optional
   depends_on "lua" => :optional
   depends_on "fpc" => :optional
 
   depends_on "swig" => :build
+  depends_on "gcc"
 
   def install
     args = %W[
@@ -24,9 +24,9 @@ class Xraylib < Formula
       --disable-python-numpy
       --disable-php
       --disable-java
+      --enable-fortran2003
     ]
 
-    args << ((build.with? "fortran") ? "--enable-fortran2003" : "--disable-fortran2003")
     args << ((build.with? "perl") ? "--enable-perl" : "--disable-perl")
     args << ((build.with? "lua") ? "--enable-lua" : "--disable-lua")
     args << ((build.with? "ruby") ? "--enable-ruby" : "--disable-ruby")

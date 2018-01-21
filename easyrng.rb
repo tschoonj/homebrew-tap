@@ -4,7 +4,7 @@ class Easyrng < Formula
   url "https://github.com/tschoonj/easyRNG/releases/download/easyRNG-1.1/easyRNG-1.1.tar.gz"
   sha256 "dd85fc845a5f7e99c71ff440888357304dec938d7be40e5ee4400272d2cb5a41"
 
-  depends_on :fortran => [:build, :recommended]
+  depends_on "gcc"
   needs :cxx11
 
   def install
