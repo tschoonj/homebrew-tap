@@ -8,7 +8,7 @@ class Xraylib < Formula
   option "with-ruby", "Build with ruby support"
 
   depends_on :python => :recommended
-  depends_on :python3 => :optional
+  depends_on "python3" => :optional
   depends_on "lua" => :optional
   depends_on "fpc" => :optional
 
