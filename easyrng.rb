@@ -5,7 +5,6 @@ class Easyrng < Formula
   sha256 "dd85fc845a5f7e99c71ff440888357304dec938d7be40e5ee4400272d2cb5a41"
 
   depends_on "gcc"
-  needs :cxx11
 
   def install
     system "./configure", "--disable-debug",

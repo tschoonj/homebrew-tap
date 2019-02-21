@@ -8,7 +8,6 @@ class GtkmmPlplot < Formula
   depends_on "gtkmm3"
   depends_on "plplot"
   depends_on "boost" => :recommended
-  needs :cxx11
 
   def install
     system "./configure", "--disable-debug",
