@@ -4,16 +4,19 @@ class Xraylib < Formula
   url "https://xraylib.tomschoonjans.eu/xraylib-3.3.0.tar.gz"
   sha256 "a22a73b8d90eb752b034bab1a4cf6abdd81b8c7dc5020bcb22132d2ee7aacd42"
 
-  option "with-perl", "Build with perl support"
-  option "with-ruby", "Build with ruby support"
-
-  depends_on "python" => :recommended
-  depends_on "python3" => :optional
-  depends_on "lua" => :optional
-  depends_on "fpc" => :optional
-
   depends_on "swig" => :build
   depends_on "gcc"
+  depends_on "python" => :recommended
+  depends_on "fpc" => :optional
+  # depends_on "lua" => :optional # currently broken
+  depends_on "perl" => :optional
+  depends_on "python@2" => :optional
+  depends_on "ruby" => :optional
+
+  if build.with?("python@2") || build.with?("python")
+    depends_on "cython" => :build
+    depends_on "numpy"
+  end
 
   def install
     args = %W[
@@ -21,40 +24,43 @@ class Xraylib < Formula
       --disable-silent-rules
       --prefix=#{prefix}
       --disable-idl
-      --disable-python-numpy
       --disable-php
       --disable-java
       --enable-fortran2003
     ]
 
-    args << ((build.with? "perl") ? "--enable-perl" : "--disable-perl")
-    args << ((build.with? "lua") ? "--enable-lua" : "--disable-lua")
-    args << ((build.with? "ruby") ? "--enable-ruby" : "--disable-ruby")
-    args << ((build.with? "pascal") ? "--enable-pascal" : "--disable-pascal")
+    args << (build.with?("perl") ? "--enable-perl" : "--disable-perl")
+    #args << (build.with?("lua") ? "--enable-lua" : "--disable-lua")
+    args << "--disable-lua"
+    args << (build.with?("ruby") ? "--enable-ruby" : "--disable-ruby")
+    args << (build.with?("fpc") ? "--enable-pascal" : "--disable-pascal")
 
     ENV.delete "PYTHONPATH"
 
-    if build.without?("python") && build.with?("python3")
+    if build.without?("python@2") && build.with?("python")
       args << "--enable-python"
-      args << "PYTHON=python3"
+      args << "--enable-python-numpy"
+      args << "PYTHON=#{Formula["python"].opt_bin}/python3"
       system "./configure", *args
       system "make"
       system "make", "install"
-    elsif build.with?("python") && build.without?("python3")
+    elsif build.with?("python@2") && build.without?("python")
       args << "--enable-python"
+      args << "--enable-python-numpy"
+      args << "PYTHON=#{Formula["python@2"].opt_bin}/python2.7"
       system "./configure", *args
       system "make"
       system "make", "install"
-    elsif build.with?("python3")
+    elsif build.with?("python")
       # build for both python2 and python3 bindings
       # since the configure script allows for only one python binding,
       # some tricks are required here...
       args_nopython = args.dup
       args_python2 = args.dup
       args_python3 = args.dup
-      args_nopython << "--disable-python"
-      args_python2 << "--enable-python"
-      args_python3 << "--enable-python" << "PYTHON=python3"
+      args_nopython << "--disable-python" << "--disable-python-numpy"
+      args_python2 << "--enable-python" << "--enable-python-numpy" << "PYTHON=#{Formula["python@2"].opt_bin}/python2.7"
+      args_python3 << "--enable-python" << "--enable-python-numpy" << "PYTHON=#{Formula["python"].opt_bin}/python3"
 
       cd("..") do
         cp_r "xraylib-#{version}", "xraylib-#{version}-python2"
@@ -92,7 +98,7 @@ class Xraylib < Formula
       end
     else
       # install without python
-      args << "--disable-python"
+      args << "--disable-python" << "--disable-python-numpy"
       system "./configure", *args
       system "make"
       system "make", "install"
