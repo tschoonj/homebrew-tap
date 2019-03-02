@@ -5,13 +5,13 @@ class XmiMsim < Formula
   sha256 "3e970203a56a116fe0b136a857b91b6c4f001cb69b6ac8f68bd865bb7c688542"
 
   depends_on "pkg-config" => :build
-  depends_on "gcc"
-  depends_on "gsl"
   depends_on "fgsl"
+  depends_on "gcc"
+  depends_on "glib"
+  depends_on "gsl"
+  depends_on "hdf5"
   depends_on "libxml2"
   depends_on "libxslt"
-  depends_on "glib"
-  depends_on "hdf5"
   depends_on "xraylib"
 
   def install
