@@ -3,6 +3,7 @@ class Xrmc < Formula
   homepage "https://github.com/golosio/xrmc"
   url "https://xrmc.tomschoonjans.eu/xrmc-6.6.0.tar.gz"
   sha256 "89c2ca22c44ddb3bb15e1ce7a497146722e3f5a0c294618cae930a254cbbbb65"
+  revision 1
 
   option "without-test", "Don't run build-time tests (may take a long time)"
 
@@ -14,6 +15,16 @@ class Xrmc < Formula
   depends_on "pkg-config" => :build
   depends_on "xraylib"
   depends_on "xmi-msim" => :optional
+
+  # fix rng
+  patch do
+    url "https://patch-diff.githubusercontent.com/raw/golosio/xrmc/pull/38.patch"
+  end
+
+  # fix clang crashing
+  patch do
+    url "https://github.com/golosio/xrmc/commit/2e12a7daf3f29fdf1f6b2c8d06b86889cf5eaf3f.patch"
+  end
 
   def install
     inreplace Dir.glob("{examples,test}/*/Makefile.am"),
