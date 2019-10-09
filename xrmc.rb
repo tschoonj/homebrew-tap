@@ -3,17 +3,14 @@ class Xrmc < Formula
   homepage "https://github.com/golosio/xrmc"
   url "https://xrmc.tomschoonjans.eu/xrmc-6.6.0.tar.gz"
   sha256 "89c2ca22c44ddb3bb15e1ce7a497146722e3f5a0c294618cae930a254cbbbb65"
-  revision 1
-
-  option "without-test", "Don't run build-time tests (may take a long time)"
-
-  needs :openmp
+  revision 2
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "libtool" => :build
   depends_on "pkg-config" => :build
   depends_on "xraylib"
+  depends_on "llvm"
   depends_on "xmi-msim" => :optional
 
   # fix rng
@@ -27,6 +24,11 @@ class Xrmc < Formula
   end
 
   def install
+    ENV['CC'] = Formula["llvm"].opt_bin/"clang"
+    ENV['CXX'] = Formula["llvm"].opt_bin/"clang++"
+    ENV['LDFLAGS'] = "-L#{Formula["llvm"].opt_lib} -Wl,-rpath,#{Formula["llvm"].opt_lib}"
+    ENV['CPPFLAGS'] = "-isysroot #{MacOS.sdk_path}"
+
     inreplace Dir.glob("{examples,test}/*/Makefile.am"),
       "$(datadir)/examples/xrmc/", "$(datadir)/examples/"
 
@@ -48,7 +50,6 @@ class Xrmc < Formula
     system "autoreconf", "-fiv"
     system "./configure", *args
     system "make"
-    system "make", "check" if build.with? "test"
     system "make", "install"
   end
 
