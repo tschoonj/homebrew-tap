@@ -19,8 +19,7 @@ class GtkmmPlplot < Formula
 
   def install
     if build.head?
-      ENV["NOCONFIGURE"] = "1"
-      system "./autogen.sh"
+      system "autoreconf", "-i"
     end
 
     system "./configure", "--disable-debug",
