@@ -3,7 +3,14 @@ class GtkmmPlplot < Formula
   homepage "https://tschoonj.github.io/gtkmm-plplot/"
   url "https://github.com/tschoonj/gtkmm-plplot/releases/download/gtkmm-plplot-2.3/gtkmm-plplot-2.3.tar.gz"
   sha256 "db2415199b19f3c796000071ba63c3a9e979b8c62a4188777dc06bdee7c44d5d"
-  head "https://github.com/tschoonj/gtkmm-plplot.git"
+
+  head do
+    url "https://github.com/tschoonj/gtkmm-plplot.git"
+    depends_on "autoconf" => :build
+    depends_on "automake" => :build
+    depends_on "libtool" => :build
+    depends_on "mm-common" => :build
+  end
 
   depends_on "pkg-config" => :build
   depends_on "gtkmm3"
@@ -11,6 +18,11 @@ class GtkmmPlplot < Formula
   depends_on "boost" => :recommended
 
   def install
+    if build.head?
+      ENV["NOCONFIGURE"] = "1"
+      system "./autogen.sh"
+    end
+
     system "./configure", "--disable-debug",
                           "--disable-dependency-tracking",
                           "--disable-silent-rules",
