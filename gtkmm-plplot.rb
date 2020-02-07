@@ -1,8 +1,8 @@
 class GtkmmPlplot < Formula
   desc "Scientific plotting for Gtkmm3"
   homepage "https://tschoonj.github.io/gtkmm-plplot/"
-  url "https://github.com/tschoonj/gtkmm-plplot/releases/download/gtkmm-plplot-2.3/gtkmm-plplot-2.3.tar.gz"
-  sha256 "db2415199b19f3c796000071ba63c3a9e979b8c62a4188777dc06bdee7c44d5d"
+  url "https://github.com/tschoonj/gtkmm-plplot/releases/download/gtkmm-plplot-2.4/gtkmm-plplot-2.4.tar.gz"
+  sha256 "f53d2352d6c77b02dbda4d77e18256b843edf70e7405ebf5a06512547eb4c770"
 
   head do
     url "https://github.com/tschoonj/gtkmm-plplot.git"
