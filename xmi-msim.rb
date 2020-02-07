@@ -1,9 +1,8 @@
 class XmiMsim < Formula
   desc "Monte Carlo simulation of X-ray fluorescence spectrometers"
   homepage "https://github.com/tschoonj/xmimsim"
-  url "https://xmi-msim.tomschoonjans.eu/xmimsim-7.0.tar.gz"
-  sha256 "3e970203a56a116fe0b136a857b91b6c4f001cb69b6ac8f68bd865bb7c688542"
-  revision 1
+  url "https://xmi-msim.tomschoonjans.eu/xmimsim-8.0.tar.gz"
+  sha256 "0fc493c08a75485cc73ee8969285c27b567ad51c25ef51b3bab650cc941f9064"
 
   depends_on "pkg-config" => :build
   depends_on "easyrng"
@@ -15,6 +14,7 @@ class XmiMsim < Formula
   depends_on "xraylib"
   depends_on "libsoup"
   depends_on "gtkmm-plplot"
+  depends_on "libpeas"
 
   def install
     ENV.deparallelize # fortran modules don't like parallel builds
@@ -23,9 +23,7 @@ class XmiMsim < Formula
                           "--disable-silent-rules",
                           "--prefix=#{prefix}",
                           "--enable-gui",
-                          "--disable-updater",
-                          "--disable-mac-integration",
-                          "--disable-libnotify"
+                          "--disable-updater"
     system "make", "install"
   end
 
