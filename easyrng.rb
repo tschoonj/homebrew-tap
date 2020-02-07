@@ -1,17 +1,24 @@
 class Easyrng < Formula
   desc "Random number generators and distributions for C and Fortran"
   homepage "https://tschoonj.github.io/easyRNG"
-  url "https://github.com/tschoonj/easyRNG/releases/download/easyRNG-1.1/easyRNG-1.1.tar.gz"
-  sha256 "dd85fc845a5f7e99c71ff440888357304dec938d7be40e5ee4400272d2cb5a41"
+  url "https://github.com/tschoonj/easyRNG/releases/download/easyRNG-1.2/easyRNG-1.2.tar.gz"
+  sha256 "56259ae12ebb9133e55783b24b8d1a70a59df47f5b1f1485fd689a014b964072"
 
+  depends_on "meson" => :build
+  depends_on "ninja" => :build
   depends_on "gcc"
 
   def install
-    system "./configure", "--disable-debug",
-                          "--disable-dependency-tracking",
-                          "--disable-silent-rules",
-                          "--prefix=#{prefix}"
-    system "make", "install"
+    gcc = Formula["gcc"]
+    ENV['CC'] = "#{gcc.opt_bin}/gcc-9"
+    ENV['CXX'] = "#{gcc.opt_bin}/g++-9"
+    ENV['FC'] = "#{gcc.opt_bin}/gfortran-9"
+
+    mkdir "build" do
+      system "meson", "--prefix=#{prefix}", ".."
+      system "ninja"
+      system "ninja", "install"
+    end
   end
 
   test do
