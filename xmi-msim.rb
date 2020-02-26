@@ -1,8 +1,8 @@
 class XmiMsim < Formula
   desc "Monte Carlo simulation of X-ray fluorescence spectrometers"
   homepage "https://github.com/tschoonj/xmimsim"
-  url "https://xmi-msim.tomschoonjans.eu/xmimsim-8.0.tar.gz"
-  sha256 "0fc493c08a75485cc73ee8969285c27b567ad51c25ef51b3bab650cc941f9064"
+  url "https://xmi-msim.tomschoonjans.eu/xmimsim-8.1.tar.gz"
+  sha256 "15f011acf8de9bcd64103aae4054d00e4731c6ce2a16a5724039be0e6de1b66d"
 
   depends_on "pkg-config" => :build
   depends_on "easyrng"
