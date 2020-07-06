@@ -3,7 +3,7 @@ class Xraylib < Formula
   homepage "https://github.com/tschoonj/xraylib"
   url "https://xraylib.tomschoonjans.eu/xraylib-4.0.0.tar.gz"
   sha256 "578dfd69610b7274fc79e9e5ebe6a42faca5adeef50a12f87c038a29e9a8674d"
-  revision 1
+  revision 2
 
   depends_on "swig" => :build
   depends_on "gcc"
