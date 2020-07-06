@@ -3,6 +3,7 @@ class XmiMsim < Formula
   homepage "https://github.com/tschoonj/xmimsim"
   url "https://xmi-msim.tomschoonjans.eu/xmimsim-8.1.tar.gz"
   sha256 "15f011acf8de9bcd64103aae4054d00e4731c6ce2a16a5724039be0e6de1b66d"
+  revision 1
 
   depends_on "pkg-config" => :build
   depends_on "easyrng"
