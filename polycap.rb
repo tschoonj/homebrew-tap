@@ -1,9 +1,11 @@
 class Polycap < Formula
   desc "Ray-tracing polycapillaries using Monte Carlo simulations"
   homepage "https://github.com/PieterTack/polycap"
-  url "https://github.com/PieterTack/polycap/releases/download/v1.0/polycap-1.0.tar.gz"
-  sha256 "e181378eb3eb3479e87cdedc8bfb326e524999abf06b99e3a1a9528ba4f0608b"
+  url "https://github.com/PieterTack/polycap/releases/download/v1.1/polycap-1.1.tar.gz"
+  sha256 "4c15c260b00d1c0036df54016e646e25fcc8a333a29ab703a017bd674dadc04b"
 
+  depends_on "meson" => :build
+  depends_on "ninja" => :build
   depends_on "pkg-config" => :build
   depends_on "easyrng"
   depends_on "gcc"
@@ -21,24 +23,23 @@ class Polycap < Formula
 
   def install
     ENV["CC"] = Formula["llvm"].opt_bin/"clang"
+    ENV["CPPFLAGS"] = "-I#{Formula["hdf5"].opt_include}"
     ENV["LDFLAGS"] = "-L#{Formula["llvm"].opt_lib} -Wl,-rpath,#{Formula["llvm"].opt_lib}"
 
-    args = %W[
-      --disable-dependency-tracking
-      --disable-silent-rules
-      --prefix=#{prefix}
-    ]
+    args = ["-Dbuild-documentation=false"]
 
     if build.with?("python@3.8")
-      args << "--enable-python"
-      args << "PYTHON=#{Formula["python@3.8"].opt_bin}/python3"
+      args << "-Dbuild-python-bindings=true"
+      args << "-Dpython=#{Formula["python@3.8"].opt_bin}/python3"
     else
-      args << "--disable-python"
+      args << "-Dbuild-python-bindings=false"
     end
 
-    system "./configure", *args
-    system "make"
-    system "make", "install"
+    mkdir "build" do
+      system "meson", *std_meson_args, *args, ".."
+      system "ninja", "-v"
+      system "ninja", "install", "-v"
+    end
   end
 
   test do
