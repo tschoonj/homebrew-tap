@@ -3,7 +3,7 @@ class GtkmmPlplot < Formula
   homepage "https://tschoonj.github.io/gtkmm-plplot/"
   url "https://github.com/tschoonj/gtkmm-plplot/releases/download/gtkmm-plplot-2.4/gtkmm-plplot-2.4.tar.gz"
   sha256 "f53d2352d6c77b02dbda4d77e18256b843edf70e7405ebf5a06512547eb4c770"
-  revision 2
+  revision 3
 
   head do
     url "https://github.com/tschoonj/gtkmm-plplot.git"
