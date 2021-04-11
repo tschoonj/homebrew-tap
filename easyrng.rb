@@ -3,10 +3,10 @@ class Easyrng < Formula
   homepage "https://tschoonj.github.io/easyRNG"
   url "https://github.com/tschoonj/easyRNG/releases/download/easyRNG-1.2/easyRNG-1.2.tar.gz"
   sha256 "56259ae12ebb9133e55783b24b8d1a70a59df47f5b1f1485fd689a014b964072"
-  revision 2
+  revision 3
 
-  #depends_on "meson" => :build
-  #depends_on "ninja" => :build
+  depends_on "meson" => :build
+  depends_on "ninja" => :build
   depends_on "gcc"
 
   def install
@@ -15,14 +15,11 @@ class Easyrng < Formula
     ENV['CXX'] = "#{gcc.opt_bin}/g++-10"
     ENV['FC'] = "#{gcc.opt_bin}/gfortran-10"
 
-    #mkdir "build" do
-    #  system "meson", "--prefix=#{prefix}", ".."
-    #  system "ninja"
-    #  system "ninja", "install"
-    #end
-    system "./configure", "--prefix=#{prefix}"
-    system "make"
-    system "make", "install"
+    mkdir "build" do
+      system "meson", "--prefix=#{prefix}", ".."
+      system "ninja"
+      system "ninja", "install"
+    end
   end
 
   test do
