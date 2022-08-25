@@ -6,13 +6,13 @@ class Xraylib < Formula
 
   depends_on "swig" => :build
   depends_on "gcc"
-  depends_on "python@3.9" => :recommended
+  depends_on "python@3.10" => :recommended
   depends_on "fpc" => :optional
   depends_on "lua" => :optional
   depends_on "perl" => :optional
   depends_on "ruby" => :optional
 
-  if build.with?("python@3.9")
+  if build.with?("python@3.10")
     depends_on "cython" => :build
     depends_on "numpy"
   end
@@ -32,10 +32,10 @@ class Xraylib < Formula
     args << (build.with?("ruby") ? "--enable-ruby" : "--disable-ruby")
     args << (build.with?("fpc") ? "--enable-pascal" : "--disable-pascal")
 
-    if build.with?("python@3.9")
+    if build.with?("python@3.10")
       args << "--enable-python"
       args << "--enable-python-numpy"
-      args << "PYTHON=#{Formula["python@3.9"].opt_bin}/python3"
+      args << "PYTHON=#{Formula["python@3.10"].opt_bin}/python3"
     else
       args << "--disable-python"
       args << "--disable-python-numpy"
