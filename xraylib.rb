@@ -1,8 +1,8 @@
 class Xraylib < Formula
   desc "Library for interactions of X-rays with matter"
   homepage "https://github.com/tschoonj/xraylib"
-  url "https://xraylib.tomschoonjans.eu/xraylib-4.1.2.tar.gz"
-  sha256 "d0165fa1a7bf63760b94650c26ff3783020c652b96fdf8373eb758af663a7c13"
+  url "https://xraylib.tomschoonjans.eu/xraylib-4.1.3.tar.gz"
+  sha256 "f280788e9d2d730a01c1031f41233d9926b67c89e4f3fdd7f43f408bb0d24770"
 
   depends_on "swig" => :build
   depends_on "gcc"
