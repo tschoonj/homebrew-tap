@@ -3,7 +3,7 @@ class XmiMsim < Formula
   homepage "https://github.com/tschoonj/xmimsim"
   url "https://xmi-msim.tomschoonjans.eu/xmimsim-8.1.tar.gz"
   sha256 "15f011acf8de9bcd64103aae4054d00e4731c6ce2a16a5724039be0e6de1b66d"
-  revision 4
+  revision 5
 
   depends_on "pkg-config" => :build
   depends_on "autoconf" => :build
@@ -12,13 +12,12 @@ class XmiMsim < Formula
   depends_on "easyrng"
   depends_on "gcc"
   depends_on "glib"
-  depends_on "hdf5"
+  depends_on "hdf5@1.10"
   depends_on "libxml2"
   depends_on "libxslt"
   depends_on "xraylib"
-  depends_on "libsoup"
-  depends_on "gtkmm-plplot"
-  depends_on "libpeas"
+  depends_on "gtkmm-plplot@2"
+  depends_on "libpeas@1"
   depends_on xcode: :build
 
   patch :DATA
