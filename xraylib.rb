@@ -3,6 +3,7 @@ class Xraylib < Formula
   homepage "https://github.com/tschoonj/xraylib"
   url "https://xraylib.tomschoonjans.eu/xraylib-4.1.4.tar.gz"
   sha256 "b0d77b186e3bf83cc5be29d687cf6225f94276233f257d4f855e9ef61a9c14d5"
+  revision 1
 
   depends_on "swig" => :build
   depends_on "gcc"
@@ -15,6 +16,11 @@ class Xraylib < Formula
   if build.with?("python@3.12")
     depends_on "cython" => :build
     depends_on "numpy"
+  end
+
+  patch do
+    url "https://raw.githubusercontent.com/conda-forge/xraylib-feedstock/main/recipe/numpy-2.patch"
+    sha256 "57adabc5fec25ba896d3b9534237246bfd0699a13a3524de94e9720a2c6b2c76"
   end
 
   def install
