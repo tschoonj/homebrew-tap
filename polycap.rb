@@ -1,9 +1,8 @@
 class Polycap < Formula
   desc "Ray-tracing polycapillaries using Monte Carlo simulations"
   homepage "https://github.com/PieterTack/polycap"
-  url "https://github.com/PieterTack/polycap/releases/download/v1.1/polycap-1.1.tar.gz"
-  sha256 "4c15c260b00d1c0036df54016e646e25fcc8a333a29ab703a017bd674dadc04b"
-  revision 3
+  url "https://github.com/PieterTack/polycap/releases/download/v1.2/polycap-1.2.tar.xz"
+  sha256 "6e08a8f5ae29f7948a10aa75806bbf11a401ac735de903d4c574b22c25b18dce"
 
   depends_on "meson" => :build
   depends_on "ninja" => :build
@@ -14,9 +13,9 @@ class Polycap < Formula
   depends_on "llvm"
   depends_on "xraylib"
 
-  depends_on "python@3.11" => :recommended
+  depends_on "python@3.12" => :recommended
 
-  if build.with?("python@3.11")
+  if build.with?("python@3.12")
     depends_on "cython" => :build
     depends_on "numpy"
   end
@@ -28,9 +27,9 @@ class Polycap < Formula
 
     args = ["-Dbuild-documentation=false"]
 
-    if build.with?("python@3.11")
+    if build.with?("python@3.12")
       args << "-Dbuild-python-bindings=true"
-      args << "-Dpython=#{Formula["python@3.11"].opt_bin}/python3.11"
+      args << "-Dpython=#{Formula["python@3.12"].opt_bin}/python3.12"
     else
       args << "-Dbuild-python-bindings=false"
     end
@@ -48,8 +47,8 @@ class Polycap < Formula
       assert(polycap.__version__ == b"#{version}")
     EOS
 
-    pyversion = Language::Python.major_minor_version Formula["python@3.11"].opt_bin/"python3"
+    pyversion = Language::Python.major_minor_version Formula["python@3.12"].opt_bin/"python3"
     ENV.prepend_path "PYTHONPATH", lib/"python#{pyversion}/site-packages"
-    system Formula["python@3.10"].opt_bin/"python3", "test.py"
+    system Formula["python@3.12"].opt_bin/"python3", "test.py"
   end
 end
