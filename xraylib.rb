@@ -1,10 +1,14 @@
 class Xraylib < Formula
   desc "Library for interactions of X-rays with matter"
   homepage "https://github.com/tschoonj/xraylib"
-  url "https://xraylib.tomschoonjans.eu/xraylib-4.1.5.tar.gz"
-  sha256 "7fb125c2047280611b3d210e892a29d2b1761efeae2f3a0b3699a5dd33349cdf"
+  url "https://xraylib.tomschoonjans.eu/xraylib-4.1.5.tar.xz"
+  sha256 "98c171a7c75f46adf9c95a74d0e9d03b88e0122225683961032a96e59e397926"
+  revision 1
 
   depends_on "swig" => :build
+  depends_on "autoconf" => :build
+  depends_on "automake" => :build
+  depends_on "libtool" => :build
   depends_on "gcc"
   depends_on "python@3.12" => :recommended
   depends_on "fpc" => :optional
@@ -40,6 +44,7 @@ class Xraylib < Formula
       args << "--disable-python"
       args << "--disable-python-numpy"
     end
+    system "autoreconf", "-i"
     system "./configure", *args
     system "make"
     system "make", "install"
