@@ -3,20 +3,20 @@ class Xraylib < Formula
   homepage "https://github.com/tschoonj/xraylib"
   url "https://xraylib.tomschoonjans.eu/xraylib-4.1.5.tar.xz"
   sha256 "98c171a7c75f46adf9c95a74d0e9d03b88e0122225683961032a96e59e397926"
-  revision 1
+  revision 2
 
   depends_on "swig" => :build
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "libtool" => :build
   depends_on "gcc"
-  depends_on "python@3.12" => :recommended
+  depends_on "python@3.13" => :recommended
   depends_on "fpc" => :optional
   depends_on "lua" => :optional
   depends_on "perl" => :optional
   depends_on "ruby" => :optional
 
-  if build.with?("python@3.12")
+  if build.with?("python@3.13")
     depends_on "cython" => :build
     depends_on "numpy"
   end
@@ -36,10 +36,10 @@ class Xraylib < Formula
     args << (build.with?("ruby") ? "--enable-ruby" : "--disable-ruby")
     args << (build.with?("fpc") ? "--enable-pascal" : "--disable-pascal")
 
-    if build.with?("python@3.12")
+    if build.with?("python@3.13")
       args << "--enable-python"
       args << "--enable-python-numpy"
-      args << "PYTHON=#{Formula["python@3.12"].opt_bin}/python3.12"
+      args << "PYTHON=#{Formula["python@3.13"].opt_bin}/python3.13"
     else
       args << "--disable-python"
       args << "--disable-python-numpy"
