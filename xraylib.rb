@@ -1,21 +1,21 @@
 class Xraylib < Formula
   desc "Library for interactions of X-rays with matter"
   homepage "https://github.com/tschoonj/xraylib"
-  url "https://github.com/tschoonj/xraylib/releases/download/xraylib-4.2.0/xraylib-4.2.0.tar.xz"
-  sha256 "1ec79973e2abcc372e26add7bd911f54c741699511e16fb64841f1c809969ee2"
+  url "https://github.com/tschoonj/xraylib/releases/download/xraylib-4.3.0/xraylib-4.3.0.tar.xz"
+  sha256 "a86a8f217d7945e6de8192cc5850869e63123eb726c4d5ebae95f5316ee048d6"
 
   depends_on "swig" => :build
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "libtool" => :build
   depends_on "gcc"
-  depends_on "python@3.13" => :recommended
+  depends_on "python@3.14" => :recommended
   depends_on "fpc" => :optional
   depends_on "lua" => :optional
   depends_on "perl" => :optional
   depends_on "ruby" => :optional
 
-  if build.with?("python@3.13")
+  if build.with?("python@3.14")
     depends_on "cython" => :build
     depends_on "numpy"
   end
@@ -35,10 +35,10 @@ class Xraylib < Formula
     args << (build.with?("ruby") ? "--enable-ruby" : "--disable-ruby")
     args << (build.with?("fpc") ? "--enable-pascal" : "--disable-pascal")
 
-    if build.with?("python@3.13")
+    if build.with?("python@3.14")
       args << "--enable-python"
       args << "--enable-python-numpy"
-      args << "PYTHON=#{Formula["python@3.13"].opt_bin}/python3.13"
+      args << "PYTHON=#{Formula["python@3.14"].opt_bin}/python3.14"
     else
       args << "--disable-python"
       args << "--disable-python-numpy"
