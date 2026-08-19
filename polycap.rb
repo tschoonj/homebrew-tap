@@ -3,7 +3,7 @@ class Polycap < Formula
   homepage "https://github.com/PieterTack/polycap"
   url "https://github.com/PieterTack/polycap/releases/download/v1.2/polycap-1.2.tar.xz"
   sha256 "6e08a8f5ae29f7948a10aa75806bbf11a401ac735de903d4c574b22c25b18dce"
-  revision 1
+  revision 2
 
   depends_on "meson" => :build
   depends_on "ninja" => :build
@@ -14,9 +14,9 @@ class Polycap < Formula
   depends_on "llvm"
   depends_on "xraylib"
 
-  depends_on "python@3.13" => :recommended
+  depends_on "python@3.14" => :recommended
 
-  if build.with?("python@3.13")
+  if build.with?("python@3.14")
     depends_on "cython" => :build
     depends_on "numpy"
   end
@@ -26,11 +26,15 @@ class Polycap < Formula
     ENV["CPPFLAGS"] = "-I#{Formula["hdf5"].opt_include}"
     ENV["LDFLAGS"] = "-L#{Formula["llvm"].opt_lib} -Wl,-rpath,#{Formula["llvm"].opt_lib}"
 
-    args = ["-Dbuild-documentation=false"]
+    args = ["-Dbuild-documentation=false", "--libdir=lib"]
 
-    if build.with?("python@3.13")
+    if build.with?("python@3.14")
+      site_packages = prefix/Language::Python.site_packages("python3.14")
+
+      args << "-Dpython.platlibdir=#{site_packages}"
+      args << "-Dpython.purelibdir=#{site_packages}"
       args << "-Dbuild-python-bindings=true"
-      args << "-Dpython=#{Formula["python@3.13"].opt_bin}/python3.13"
+      args << "-Dpython=#{Formula["python@3.14"].opt_bin}/python3.14"
     else
       args << "-Dbuild-python-bindings=false"
     end
@@ -45,11 +49,11 @@ class Polycap < Formula
   test do
     Pathname("test.py").write <<~EOS
       import polycap
-      assert(polycap.__version__ == b"#{version}")
+      assert(polycap.__version__ == "#{version}")
     EOS
 
-    pyversion = Language::Python.major_minor_version Formula["python@3.13"].opt_bin/"python3"
+    pyversion = Language::Python.major_minor_version Formula["python@3.14"].opt_bin/"python3"
     ENV.prepend_path "PYTHONPATH", lib/"python#{pyversion}/site-packages"
-    system Formula["python@3.13"].opt_bin/"python3", "test.py"
+    system Formula["python@3.14"].opt_bin/"python3", "test.py"
   end
 end
